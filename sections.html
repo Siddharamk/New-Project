@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Sections - Oral Cancer Research</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@300;400;500;600&family=Syne:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:       #0e1a13;
+  --pine:      #1e3d2a;
+  --fern:      #2e6644;
+  --herb:      #3d8f5f;
+  --dew:       #74c496;
+  --mist:      #c8e8d6;
+  --parchment: #f4ede0;
+  --vellum:    #f7f4ee;
+  --gold:      #d9a93a;
+
+  --c1: #2d6a4f;
+  --c2: #1a5276;
+  --c3: #7d5a00;
+  --c4: #5b2d6a;
+  --c5: #1a3a5c;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--vellum);
+  color: var(--ink);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* subtle dot grid */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: radial-gradient(circle, rgba(46,102,68,0.07) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── NAV ── */
+nav {
+  background: var(--ink);
+  padding: 1.1rem 3rem;
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid rgba(217,169,58,0.2);
+  box-shadow: 0 2px 24px rgba(0,0,0,0.3);
+}
+.nav-brand {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--parchment);
+  letter-spacing: 0.3px;
+}
+.nav-brand em { color: var(--gold); font-style: normal; }
+
+/* ── HERO ── */
+.hero {
+  background: var(--ink);
+  padding: 5.5rem 2rem 5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 120%, rgba(46,102,68,0.5), transparent 65%),
+    radial-gradient(ellipse 40% 40% at 15% 15%, rgba(61,143,95,0.12), transparent 55%);
+}
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--dew);
+  margin-bottom: 1.8rem;
+  position: relative;
+  animation: up 0.6s ease 0.2s both;
+}
+.hero-tag::before, .hero-tag::after {
+  content: '';
+  width: 28px; height: 1px;
+  background: var(--dew);
+  opacity: 0.4;
+}
+.hero h1 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(2.8rem, 6.5vw, 5.2rem);
+  font-weight: 300;
+  color: var(--parchment);
+  line-height: 1.05;
+  letter-spacing: -1px;
+  position: relative;
+  animation: up 0.6s ease 0.35s both;
+}
+.hero h1 strong {
+  font-weight: 700;
+  font-style: italic;
+  color: var(--dew);
+  display: block;
+}
+.hero-sub {
+  font-family: 'Syne', sans-serif;
+  color: rgba(200,232,214,0.45);
+  font-size: 0.7rem;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  margin-top: 1.5rem;
+  position: relative;
+  animation: up 0.6s ease 0.5s both;
+}
+.hero-rule {
+  width: 1px; height: 44px;
+  background: linear-gradient(to bottom, transparent, rgba(116,196,150,0.35), transparent);
+  margin: 2rem auto 0;
+  animation: up 0.5s ease 0.65s both;
+}
+@keyframes up {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── CARDS WRAP ── */
+.cards-wrap {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 4rem auto 2rem;
+  padding: 0 2rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+}
+@media (max-width: 800px) { .cards-wrap { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 500px) { .cards-wrap { grid-template-columns: 1fr; } }
+
+/* ── CARD ── */
+.card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(14,26,19,0.08);
+  box-shadow: 0 2px 10px rgba(14,26,19,0.05);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: cardIn 0.5s ease forwards;
+  transition: transform 0.3s cubic-bezier(0.23,1,0.32,1), box-shadow 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  aspect-ratio: 1 / 1;
+}
+.card:nth-child(1) { animation-delay: 0.08s; }
+.card:nth-child(2) { animation-delay: 0.16s; }
+.card:nth-child(3) { animation-delay: 0.24s; }
+.card:nth-child(4) { animation-delay: 0.32s; }
+.card:nth-child(5) { animation-delay: 0.40s; }
+@keyframes cardIn { to { opacity: 1; transform: translateY(0); } }
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(14,26,19,0.13);
+}
+
+/* Top accent bar */
+.card-accent {
+  height: 5px;
+  width: 100%;
+  flex-shrink: 0;
+}
+.accent-1 { background: linear-gradient(90deg, #1e5c3a, #52c47a); }
+.accent-2 { background: linear-gradient(90deg, #1a3a5c, #3a8fd4); }
+.accent-3 { background: linear-gradient(90deg, #5c3a00, #d4924a); }
+.accent-4 { background: linear-gradient(90deg, #3a1a5c, #9b6ac4); }
+.accent-5 { background: linear-gradient(90deg, #1a2e5c, #4a7ac4); }
+
+.card-step {
+  font-family: 'Fraunces', serif;
+  font-size: 1.45rem;
+  font-weight: 600;
+  font-style: italic;
+  line-height: 1;
+}
+.step-1 { color: var(--c1); }
+.step-2 { color: var(--c2); }
+.step-3 { color: var(--c3); }
+.step-4 { color: var(--c4); }
+.step-5 { color: var(--c5); }
+
+.card-icon-svg {
+  width: 28px; height: 28px;
+  stroke-width: 1.5;
+  fill: none;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+.icon-1 { stroke: var(--c1); }
+.icon-2 { stroke: var(--c2); }
+.icon-3 { stroke: var(--c3); }
+.icon-4 { stroke: var(--c4); }
+.icon-5 { stroke: var(--c5); }
+
+/* Card body */
+.card-body {
+  flex: 1;
+  padding: 1.6rem 1.8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.card-top { display: flex; flex-direction: column; gap: 1.2rem; }
+.card-meta { display: flex; align-items: center; justify-content: space-between; }
+
+.card-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+}
+.label-1 { color: var(--c1); }
+.label-2 { color: var(--c2); }
+.label-3 { color: var(--c3); }
+.label-4 { color: var(--c4); }
+.label-5 { color: var(--c5); }
+
+.card-title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.18;
+  letter-spacing: -0.3px;
+}
+
+.card-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: #7a8e80;
+  line-height: 1.6;
+  margin-top: 0.4rem;
+}
+
+/* Arrow at bottom */
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 1.2rem;
+  border-top: 1px solid rgba(14,26,19,0.07);
+}
+.card-cta {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--fern);
+  transition: color 0.2s;
+}
+.card:hover .card-cta { color: var(--herb); }
+
+.arrow-circle {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(14,26,19,0.12);
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.25s ease;
+  flex-shrink: 0;
+}
+.card:hover .arrow-circle {
+  border-color: var(--herb);
+  background: var(--herb);
+}
+.arrow-circle svg {
+  width: 13px; height: 13px;
+  stroke: rgba(14,26,19,0.3);
+  stroke-width: 2;
+  fill: none;
+  stroke-linecap: round; stroke-linejoin: round;
+  transition: stroke 0.25s ease, transform 0.25s ease;
+}
+.card:hover .arrow-circle svg {
+  stroke: #fff;
+  transform: translateX(2px);
+}
+
+/* ── BACK ── */
+.back-wrap {
+  text-align: center;
+  padding: 2rem 2rem 5rem;
+  position: relative;
+  z-index: 1;
+}
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.75rem 2rem;
+  border: 1px solid rgba(46,102,68,0.22);
+  border-radius: 50px;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--pine);
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+.back-link:hover {
+  background: var(--pine);
+  color: var(--parchment);
+  border-color: var(--pine);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(30,61,42,0.16);
+}
+
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-brand"><em>Anticancer Potential</em> of Medicinal Plants in Oral Cancer Therapy</span>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-tag">Research · Discovery · Healing</div>
+  <h1>Project <strong>Sections</strong></h1>
+  <p class="hero-sub">Oral Cancer Research Initiative</p>
+  <div class="hero-rule"></div>
+</header>
+
+<!-- CARDS -->
+<div class="cards-wrap">
+
+  <a href="introduction.html" class="card">
+    <div class="card-accent accent-1"></div>
+    <div class="card-body">
+      <div class="card-top">
+        <div class="card-meta">
+          <span class="card-step step-1">01</span>
+          <svg class="card-icon-svg icon-1" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        </div>
+        <h3 class="card-title">Introduction</h3>
+        <p class="card-subtitle">Oral cancer overview, risk factors & plant-based therapy foundations.</p>
+      </div>
+      <div class="card-footer">
+        <span class="card-cta card-label label-1">Overview</span>
+        <div class="arrow-circle">
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+      </div>
+    </div>
+  </a>
+
+  <a href="plants.html" class="card">
+    <div class="card-accent accent-2"></div>
+    <div class="card-body">
+      <div class="card-top">
+        <div class="card-meta">
+          <span class="card-step step-2">02</span>
+          <svg class="card-icon-svg icon-2" viewBox="0 0 24 24"><path d="M12 22V12"/><path d="M12 12C12 7 8 3 3 3c0 5 4 9 9 9"/><path d="M12 12c0-5 4-9 9-9-1 5-5 9-9 9"/></svg>
+        </div>
+        <h3 class="card-title">Medicinal Plants</h3>
+        <p class="card-subtitle">Neem, Tulsi, Jamun, Aloe Vera & Ginger — phytochemistry & anticancer profiles.</p>
+      </div>
+      <div class="card-footer">
+        <span class="card-cta card-label label-2">Botany</span>
+        <div class="arrow-circle">
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+      </div>
+    </div>
+  </a>
+
+  
+
+  <a href="conclusion.html" class="card">
+    <div class="card-accent accent-4"></div>
+    <div class="card-body">
+      <div class="card-top">
+        <div class="card-meta">
+          <span class="card-step step-4">04</span>
+          <svg class="card-icon-svg icon-4" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h3 class="card-title">Conclusion</h3>
+        <p class="card-subtitle">Key takeaways & recommendations for future herbal cancer research.</p>
+      </div>
+      <div class="card-footer">
+        <span class="card-cta card-label label-4">Findings</span>
+        <div class="arrow-circle">
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+      </div>
+    </div>
+  </a>
+
+  <a href="rashshala.html" class="card">
+    <div class="card-accent accent-5"></div>
+    <div class="card-body">
+      <div class="card-top">
+        <div class="card-meta">
+          <span class="card-step step-5">05</span>
+          <svg class="card-icon-svg icon-5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <h3 class="card-title">Rashshala Visit</h3>
+        <p class="card-subtitle">Field study of traditional herbal practices & indigenous plant knowledge.</p>
+      </div>
+      <div class="card-footer">
+        <span class="card-cta card-label label-5">Field Experience</span>
+        <div class="arrow-circle">
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+      </div>
+    </div>
+  </a>
+
+</div>
+
+<!-- BACK -->
+<div class="back-wrap">
+  <a href="index.html" class="back-link">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    Back to Home
+  </a>
+</div>
+
+</body>
+</html>

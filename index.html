@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>y</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a2e1a;
+            --green: #4a8c5c;
+            --gold: #c9a84c;
+            --light: #f5f2eb;
+            --dark: #0e1a0e;
+            --muted: #7a8a7a;
+        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'DM Sans',sans-serif;line-height:1.7;color:#2a3a2a;background:var(--light)}
+
+        /* NAVBAR */
+        .navbar-custom{background:rgba(14,26,14,.92);backdrop-filter:blur(12px);padding:1rem 0;transition:background .4s}
+        .navbar-custom .navbar-brand{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;color:var(--gold)!important}
+        .navbar-custom .nav-link{color:rgba(255,255,255,.8)!important;font-size:.9rem;padding:.5rem 1rem!important;transition:color .3s}
+        .navbar-custom .nav-link:hover{color:var(--gold)!important}
+        .navbar-custom .nav-link.enter{background:var(--green);color:#fff!important;border-radius:30px;padding:.4rem 1.2rem!important}
+        .navbar-custom .nav-link.enter:hover{background:var(--gold)}
+
+        /* HERO */
+        .hero-section{
+            position:relative;height:100vh;min-height:600px;
+            display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;overflow:hidden;
+            background-image:
+            
+                url(images/background.jpeg);
+            background-size:cover;background-position:center;background-repeat:no-repeat;background-attachment:fixed;
+        }
+        .hero-section::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 40%,rgba(0,0,0,.45) 100%);pointer-events:none}
+        .hero-content{position:relative;z-index:2;max-width:850px;padding:2rem;animation:fadeUp 1s ease both}
+        @keyframes fadeUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+        .hero-content .eyebrow{font-size:.75rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem}
+        .hero-content h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:700;line-height:1.2;margin-bottom:1.5rem;text-shadow:0 2px 20px rgba(0,0,0,.4)}
+        .hero-content p{font-size:1.1rem;margin-bottom:2.5rem;opacity:.85;max-width:600px;margin-left:auto;margin-right:auto}
+        .scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:2;color:rgba(255,255,255,.4);font-size:.7rem;letter-spacing:2px;text-transform:uppercase;text-align:center;animation:bounce 2s infinite}
+        @keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+
+        /* BUTTONS */
+        .btn-h{display:inline-block;padding:.85rem 2.2rem;font-size:.88rem;letter-spacing:1.5px;text-transform:uppercase;font-weight:500;border-radius:50px;transition:all .3s;text-decoration:none}
+        .btn-h-green{background:var(--green);color:#fff;border:2px solid var(--green);box-shadow:0 6px 24px rgba(74,140,92,.35)}
+        .btn-h-green:hover{background:transparent;color:#fff;border-color:#fff;transform:translateY(-3px)}
+        .btn-h-outline{background:transparent;border:2px solid #fff;color:#fff}
+        .btn-h-outline:hover{background:#fff;color:var(--primary);transform:translateY(-3px)}
+
+        /* FEATURES */
+        .features-section{
+            padding:6rem 0;
+            background-color:var(--light);
+            background-image:
+                radial-gradient(circle at 15% 85%,rgba(74,140,92,.08) 0%,transparent 50%),
+                radial-gradient(circle at 85% 15%,rgba(201,168,76,.07) 0%,transparent 50%),
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%234a8c5c' fill-opacity='0.045'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .s-label{font-size:.72rem;letter-spacing:3px;text-transform:uppercase;color:var(--green);margin-bottom:.7rem;font-weight:500}
+        .s-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,2.8rem);font-weight:700;color:var(--primary);margin-bottom:1rem}
+        .feature-card{background:#b3c7bc;padding:2.5rem 2rem;border-radius:16px;box-shadow:0 4px 24pxrgba(11, 105, 71, 0.211);transition:all .4s;height:100%;border:1px solid rgba(74,140,92,.1);position:relative;overflow:hidden}
+        .feature-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--green),var(--gold));transform:scaleX(0);transform-origin:left;transition:transform .4s}
+        .feature-card:hover{transform:translateY(-8px);box-shadow:0 16px 48px rgba(34, 118, 79, 0.12)}
+        .feature-card:hover::before{transform:scaleX(1)}
+        .f-icon{width:56px;height:56px;background:linear-gradient(135deg,var(--green),#3d7d4f);border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem;font-size:1.4rem;color:#23563d}
+        .feature-card h3{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:700;color:var(--primary);margin-bottom:.8rem}
+        .feature-card p{color:var(--muted);font-size:.95rem}
+
+        /* PLANTS SECTION */
+        .plants-section{
+            padding:6rem 0;position:relative;overflow:hidden;color:#fff;
+            background-color:#0d1f0d;
+            background-image:
+                linear-gradient(rgba(10,20,10,.86),rgba(10,20,10,.80)),
+                url();
+            background-size:cover;background-position:center;background-attachment:fixed;
+        }
+        .plants-section .s-label{color:var(--gold)}
+        .plants-section .s-title{color:#fff}
+
+        /* PLANT CARDS */
+        .plant-card{background:rgba(255,255,255,.07);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1);border-radius:16px;overflow:hidden;transition:all .4s;height:100%}
+        .plant-card:hover{background:rgba(255,255,255,.12);transform:translateY(-8px);border-color:rgba(201,168,76,.4);box-shadow:0 20px 50px rgba(0,0,0,.3)}
+        .plant-img-wrap{height:200px;overflow:hidden;position:relative}
+        .plant-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .5s;filter:brightness(.92)}
+        .plant-card:hover .plant-img-wrap img{transform:scale(1.08)}
+        .plant-badge{position:absolute;top:.7rem;right:.7rem;background:rgba(201,168,76,.88);color:#0e1a0e;font-size:.62rem;letter-spacing:1px;text-transform:uppercase;font-weight:600;padding:.2rem .6rem;border-radius:20px}
+
+        /* Plant name label overlay */
+        .plant-name-bar{
+            position:absolute;bottom:0;left:0;right:0;
+            background:linear-gradient(transparent, rgba(0,0,0,.75));
+            padding:.8rem 1rem .6rem;
+        }
+        .plant-name-bar h4{
+            font-family:'Cormorant Garamond',serif;
+            font-size:1.4rem;font-weight:700;
+            color:#fff;margin:0;
+            text-shadow:0 1px 6px rgba(0,0,0,.6);
+        }
+        .plant-name-bar .sci{
+            font-style:italic;color:rgba(255,255,255,.7);
+            font-size:.78rem;margin:0;
+        }
+
+        .plant-info{padding:1rem 1.2rem}
+        .plant-info .desc{color:rgba(255,255,255,.68);font-size:.85rem;line-height:1.6}
+
+        /* CTA */
+        .cta-section{
+            position:relative;padding:7rem 0;text-align:center;color:#fff;overflow:hidden;
+            background-color:#1a3020;
+            background-image:
+                linear-gradient(rgba(15,35,15,.82),rgba(15,35,15,.82)),
+                url('https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=1600&q=80');
+            background-size:cover;background-position:center;
+        }
+        .cta-section .s-label{color:var(--gold)}
+        .cta-section h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);font-weight:700;margin-bottom:1rem}
+        .cta-section p{font-size:1.05rem;opacity:.78;max-width:520px;margin:0 auto 2.2rem}
+
+        /* FOOTER */
+        .footer{background:var(--dark);color:rgba(255,255,255,.65);padding:4rem 0 1.5rem}
+        .footer h5{font-family:'Cormorant Garamond',serif;color:var(--gold);font-size:1.1rem;margin-bottom:1.2rem}
+        .footer a{color:rgba(255,255,255,.5);text-decoration:none;transition:color .3s}
+        .footer a:hover{color:var(--gold)}
+        .footer ul li{margin-bottom:.5rem}
+        .footer-bottom{border-top:1px solid rgba(255,255,255,.07);margin-top:3rem;padding-top:1.5rem;font-size:.8rem;color:rgba(255,255,255,.28);text-align:center}
+
+        /* SCROLL ANIMATE */
+        .sa{opacity:0;transform:translateY(28px);transition:opacity .65s,transform .65s}
+        .sa.vis{opacity:1;transform:translateY(0)}
+
+        @media(max-width:768px){.hero-section,.plants-section,.cta-section{background-attachment:scroll}}
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#"><i class="bi bi-flower1 me-2"></i>Anticancer Plants</a>
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="nav">
+            <ul class="navbar-nav ms-auto align-items-center gap-1">
+                <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+                <li class="nav-item"><a class="nav-link" href="#plants">Plants</a></li>
+                <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section id="home" class="hero-section">
+    <div class="hero-content">
+       
+        <h1></h1>
+        <p></p>
+        <a href="sections.html" class="btn-h btn-h-green">Explore Research</a>
+    </div>
+    <div class="scroll-hint"><i class="bi bi-chevron-down d-block mb-1"></i>Scroll</div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="features-section">
+    <div class="container">
+        <div class="text-center mb-5 sa">
+            <p class="s-label">What We Cover</p>
+            <h2 class="s-title">Key Features of This Research</h2>
+            <p class="text-muted mx-auto" style="max-width:520px">A comprehensive exploration of plant-based anticancer compounds and their role in oral cancer management.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4"><div class="feature-card sa">
+                <div class="f-icon"><i class="bi bi-journal-text"></i></div>
+                <h3>Research-Based</h3>
+                <p>Grounded in both classical Ayurvedic texts and peer-reviewed modern pharmacology for a complete evidence-based perspective.</p>
+            </div></div>
+            <div class="col-md-4"><div class="feature-card sa" style="transition-delay:.1s">
+                <div class="f-icon"><i class="bi bi-flower2"></i></div>
+                <h3>Natural Healing</h3>
+                <p>Traditional plant-based therapies offering holistic treatment with fewer adverse effects than conventional interventions.</p>
+            </div></div>
+            <div class="col-md-4"><div class="feature-card sa" style="transition-delay:.2s">
+                <div class="f-icon"><i class="bi bi-heart-pulse"></i></div>
+                <h3>Health Benefits</h3>
+                <p>Detailed analysis of how medicinal compounds inhibit cancer cell growth, reduce inflammation and bolster immune response.</p>
+            </div></div>
+        </div>
+    </div>
+</section>
+
+<!-- PLANTS -->
+<section id="plants" class="plants-section">
+    <div class="container position-relative" style="z-index:2">
+        <div class="text-center mb-5 sa">
+            <p class="s-label">Flora Medica</p>
+            <h2 class="s-title">Featured Medicinal Plants</h2>
+            <p style="color:rgba(255,255,255,.6);max-width:500px;margin:0 auto">Each plant carries centuries of traditional use, now validated by molecular research.</p>
+        </div>
+        <div class="row g-4">
+
+            <!-- NEEM -->
+            <div class="col-md-3 col-sm-6"><div class="plant-card sa">
+                <div class="plant-img-wrap">
+                    <img src="images/Neem_Plant.webp" alt="Neem Plant">
+                    <span class="plant-badge">Antifungal</span>
+                    <div class="plant-name-bar">
+                        <h4>Neem</h4>
+                        <p class="sci">Azadirachta indica</p>
+                    </div>
+                </div>
+                <div class="plant-info">
+                    <p class="desc">Rich in limonoids; shown to induce apoptosis in oral cancer cell lines.</p>
+                </div>
+            </div></div>
+
+            <!-- TULSI -->
+            <div class="col-md-3 col-sm-6"><div class="plant-card sa" style="transition-delay:.1s">
+                <div class="plant-img-wrap">
+                    <img src="images/nurserylive-seeds-krishna-tulsi-tulsi-black-0-5-kg-seeds-112929.png-3.webp" alt="Tulsi Plant">
+                    <span class="plant-badge">Adaptogen</span>
+                    <div class="plant-name-bar">
+                        <h4>Tulsi</h4>
+                        <p class="sci">Ocimum sanctum</p>
+                    </div>
+                </div>
+                <div class="plant-info">
+                    <p class="desc">Eugenol and rosmarinic acid exhibit potent anti-proliferative effects.</p>
+                </div>
+            </div></div>
+
+            <!-- TURMERIC -->
+            <div class="col-md-3 col-sm-6"><div class="plant-card sa" style="transition-delay:.2s">
+                <div class="plant-img-wrap">
+                    <img src="images/360_F_1466395221_AD7hy5LaD5768y78NqE3R22WKhf5kedo.jpg" alt="Turmeric">
+                    <span class="plant-badge">Anti-inflammatory</span>
+                    <div class="plant-name-bar">
+                        <h4>Turmeric</h4>
+                        <p class="sci">Curcuma longa</p>
+                    </div>
+                </div>
+                <div class="plant-info">
+                    <p class="desc">Curcumin is one of the most studied natural anticancer polyphenols.</p>
+                </div>
+            </div></div>
+
+            <!-- ALOE VERA -->
+            <div class="col-md-3 col-sm-6"><div class="plant-card sa" style="transition-delay:.3s">
+                <div class="plant-img-wrap">
+                    <img src="images/71L7nHLHxVL._AC_UF1000,1000_QL80_.jpg" alt="Aloe Vera">
+                    <span class="plant-badge">Immunomodulator</span>
+                    <div class="plant-name-bar">
+                        <h4>Aloe Vera</h4>
+                        <p class="sci">Aloe barbadensis</p>
+                    </div>
+                </div>
+                <div class="plant-info">
+                    <p class="desc">Aloin compounds demonstrate cytotoxic activity against oral carcinoma cells.</p>
+                </div>
+            </div></div>
+
+        </div>
+        <div class="text-center mt-5 sa"><a href="plants.html" class="btn-h btn-h-green">View All Plants</a></div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section id="contact" class="cta-section">
+    <div class="container">
+        <p class="s-label sa">Ready to Explore?</p>
+        <h2 class="sa">Dive Into the Complete Research</h2>
+        <p class="sa">Discover the full compendium of medicinal plants, their phytochemicals, and their role in oral cancer therapy.</p>
+        <a href="sections.html" class="btn-h btn-h-outline sa">Enter Website &nbsp;<i class="bi bi-arrow-right"></i></a>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <h5><i class="bi bi-flower1 me-2"></i>Anticancer Plants</h5>
+                <p class="small">A research portal on the anticancer potential of Ayurvedic medicinal plants in the management of oral cancer.</p>
+            </div>
+            <div class="col-md-4">
+                <h5>Quick Links</h5>
+                <ul class="list-unstyled small">
+                    <li><a href="index.html"><i class="bi bi-chevron-right me-1"></i>Home</a></li>
+                    <li><a href="introduction.html"><i class="bi bi-chevron-right me-1"></i>Introduction</a></li>
+                    <li><a href="plants.html"><i class="bi bi-chevron-right me-1"></i>Medicinal Plants</a></li>
+                    <li><a href="conclusion.html"><i class="bi bi-chevron-right me-1"></i>Conclusion</a></li>
+                    <li><a href="sections.html"><i class="bi bi-chevron-right me-1"></i>Project Section</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h5>Contact</h5>
+                <p class="small">@ Phyto Bioinformatics Team<br># Walchand Department of M.Sc Bioinformatics <br><i class="bi bi-envelope me-1"></i>-Siddharam kothane<br> -Saba Inamdar <br> -Sakshi Kamble <br>-Mahejbeen Jamadar</p>
+            </div>
+        </div>
+        <div class="footer-bottom">&copy; 2026 Anticancer Plants Research.By @ Phyto Bioinformatics Team  All rights reserved.</div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const obs = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting) e.target.classList.add('vis'); }), {threshold:.1,rootMargin:'0px 0px -40px 0px'});
+    document.querySelectorAll('.sa').forEach(el => obs.observe(el));
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', function(e) {
+            e.preventDefault();
+            const t = document.querySelector(this.getAttribute('href'));
+            if(t) t.scrollIntoView({behavior:'smooth',block:'start'});
+        });
+    });
+    const nav = document.querySelector('.navbar-custom');
+    window.addEventListener('scroll', () => {
+        nav.style.background = window.scrollY > 80 ? 'rgba(14,26,14,.97)' : 'rgba(14,26,14,.92)';
+    });
+</script>
+</body>
+</html>

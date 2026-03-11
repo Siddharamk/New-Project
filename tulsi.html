@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tulsi — Ocimum tenuiflorum</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@300;400;500;600&family=Syne:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink:       #0e1a13;
+      --pine:      #1e3d2a;
+      --fern:      #2e6644;
+      --herb:      #3d8f5f;
+      --dew:       #74c496;
+      --mist:      #d0eddf;
+      --parchment: #f4ede0;
+      --vellum:    #f7f4ee;
+      --gold:      #d9a93a;
+      --warm:      #f0f7f2;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--vellum);
+      color: var(--ink);
+      line-height: 1.7;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: radial-gradient(circle, rgba(46,102,68,0.06) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--ink);
+      padding: 1.1rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(217,169,58,0.2);
+      box-shadow: 0 2px 24px rgba(0,0,0,0.3);
+    }
+    .nav-brand {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--parchment);
+    }
+    .nav-brand em { color: var(--gold); font-style: normal; }
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(220,240,225,0.55);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--dew); }
+
+    /* ── MAIN LAYOUT ── */
+    .page-wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 3rem 2rem 5rem;
+    }
+
+    /* ── SECTION BLOCK ── */
+    .section-block {
+      margin-bottom: 3rem;
+      background: #fff;
+      border-radius: 14px;
+      border: 1px solid rgba(14,26,19,0.08);
+      box-shadow: 0 2px 10px rgba(14,26,19,0.04);
+      overflow: hidden;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.4rem 1.8rem;
+      border-bottom: 1px solid rgba(14,26,19,0.07);
+    }
+    .section-num {
+      font-family: 'Fraunces', serif;
+      font-size: 0.95rem;
+      font-style: italic;
+      font-weight: 600;
+      color: var(--herb);
+      min-width: 28px;
+    }
+    .section-header h2 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: -0.2px;
+    }
+    .section-body {
+      padding: 1.6rem 1.8rem;
+    }
+    .section-body p {
+      font-size: 0.9rem;
+      color: #4a5e52;
+      line-height: 1.85;
+      margin-bottom: 0.75rem;
+    }
+    .section-body p:last-child { margin-bottom: 0; }
+
+    /* ── CLASSIFICATION GRID ── */
+    .classif-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.75rem;
+    }
+    .classif-item {
+      background: var(--warm);
+      border: 1px solid rgba(46,102,68,0.1);
+      border-radius: 10px;
+      padding: 0.9rem 1.1rem;
+    }
+    .classif-key {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--herb);
+      margin-bottom: 0.25rem;
+    }
+    .classif-val {
+      font-family: 'Fraunces', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    /* ── COMMON NAMES ── */
+    .name-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+    .name-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.4rem 1rem;
+      background: var(--mist);
+      border: 1px solid rgba(46,102,68,0.15);
+      border-radius: 50px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--pine);
+    }
+
+    /* ── LIST ── */
+    .detail-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .detail-list li {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      font-size: 0.88rem;
+      color: #4a5e52;
+      line-height: 1.7;
+    }
+    .detail-list li::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--herb);
+      border-radius: 50%;
+      margin-top: 0.55rem;
+      flex-shrink: 0;
+    }
+    .detail-list li strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    /* ── MECHANISM CARDS ── */
+    .mechanism-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.75rem;
+    }
+    .mech-card {
+      background: var(--warm);
+      border: 1px solid rgba(46,102,68,0.1);
+      border-radius: 10px;
+      padding: 1.1rem 1.2rem;
+    }
+    .mech-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--fern);
+      margin-bottom: 0.4rem;
+    }
+    .mech-desc {
+      font-size: 0.82rem;
+      color: #5a6e62;
+      line-height: 1.65;
+    }
+
+    /* ── ACCENT BARS ── */
+    .accent-green  .section-header { border-left: 4px solid var(--herb); }
+    .accent-teal   .section-header { border-left: 4px solid #2e8a7a; }
+    .accent-amber  .section-header { border-left: 4px solid #c8943a; }
+    .accent-violet .section-header { border-left: 4px solid #7a4a9a; }
+    .accent-blue   .section-header { border-left: 4px solid #3a6aaa; }
+    .accent-rose   .section-header { border-left: 4px solid #aa4a5a; }
+    .accent-sage   .section-header { border-left: 4px solid #6a8a5a; }
+    .accent-gold   .section-header { border-left: 4px solid var(--gold); }
+
+    /* ── FIELD PHOTO ── */
+    .field-photo-wrap img {
+      width: 100%;
+      max-height: 550px;
+      object-fit: cover;
+      display: block;
+      border-radius: 10px;
+    }
+
+    /* ── PHYTOCHEMICAL TABLE ── */
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .phyto-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+      min-width: 620px;
+    }
+    .phyto-table thead tr { background: var(--ink); }
+    .phyto-table thead th {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--dew);
+      padding: 0.9rem 1rem;
+      text-align: left;
+      white-space: nowrap;
+    }
+    .phyto-table tbody tr {
+      border-bottom: 1px solid rgba(14,26,19,0.07);
+      transition: background 0.2s;
+    }
+    .phyto-table tbody tr:last-child { border-bottom: none; }
+    .phyto-table tbody tr:hover { background: var(--warm); }
+    .phyto-table td {
+      padding: 0.9rem 1rem;
+      color: #4a5e52;
+      vertical-align: top;
+      line-height: 1.6;
+    }
+    .phyto-table td:first-child {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-size: 0.85rem;
+      color: var(--ink);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .compound-name {
+      font-family: 'Fraunces', serif;
+      font-weight: 600;
+      font-size: 0.88rem;
+      color: var(--ink);
+      display: block;
+      margin-bottom: 0.15rem;
+    }
+    .phyto-class-badge {
+      display: inline-block;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.56rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 0.18rem 0.55rem;
+      border-radius: 20px;
+      background: var(--mist);
+      color: var(--fern);
+      border: 1px solid rgba(46,102,68,0.15);
+      white-space: nowrap;
+    }
+    .pubchem-id {
+      font-family: 'Inter', monospace;
+      font-size: 0.78rem;
+      color: #3a6aaa;
+      font-weight: 500;
+    }
+    .part-badge {
+      display: inline-block;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 0.2rem 0.65rem;
+      background: rgba(116,196,150,0.15);
+      border: 1px solid rgba(116,196,150,0.3);
+      border-radius: 20px;
+      color: var(--pine);
+      white-space: nowrap;
+    }
+    .activity-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+    .activity-tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 500;
+      padding: 0.18rem 0.55rem;
+      border-radius: 20px;
+      border: 1px solid rgba(14,26,19,0.1);
+      color: #4a5e52;
+      background: #fff;
+      white-space: nowrap;
+    }
+
+    /* ── BACK ── */
+    .back-wrap { text-align: center; padding-top: 1rem; }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.8rem 2.2rem;
+      border: 1px solid rgba(46,102,68,0.22);
+      border-radius: 50px;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--pine);
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+    .back-link:hover {
+      background: var(--pine);
+      color: var(--parchment);
+      border-color: var(--pine);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(30,61,42,0.16);
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 1rem 1.2rem; }
+      .page-wrap { padding: 2rem 1rem 4rem; }
+      .section-body, .section-header { padding-left: 1.2rem; padding-right: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-brand"><em>Anticancer Potential</em> of Medicinal Plants in Oral Cancer Therapy</span>
+  <a href="plants.html" class="nav-back">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    Back to Plants
+  </a>
+</nav>
+
+<!-- CONTENT -->
+<div class="page-wrap">
+
+  <!-- Field Photo -->
+  <div class="section-block accent-sage">
+    <div class="section-header">
+      <span class="section-num">—</span>
+      <h2>Field Documentation</h2>
+    </div>
+    <div class="section-body">
+      <div class="field-photo-wrap">
+        <img src="images/WhatsApp Image 2026-03-10 at 16.59.06.jpeg" alt="Tulsi plant observed at Solapur field visit, Maharashtra">
+      </div>
+    </div>
+  </div>
+
+  <!-- 1. Scientific Classification -->
+  <div class="section-block accent-green">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Scientific Classification</h2>
+    </div>
+    <div class="section-body">
+      <div class="classif-grid">
+        <div class="classif-item">
+          <div class="classif-key">Kingdom</div>
+          <div class="classif-val">Plantae</div>
+        </div>
+        <div class="classif-item">
+          <div class="classif-key">Division</div>
+          <div class="classif-val">Magnoliophyta</div>
+        </div>
+        <div class="classif-item">
+          <div class="classif-key">Class</div>
+          <div class="classif-val">Magnoliopsida</div>
+        </div>
+        <div class="classif-item">
+          <div class="classif-key">Order</div>
+          <div class="classif-val">Lamiales</div>
+        </div>
+        <div class="classif-item">
+          <div class="classif-key">Family</div>
+          <div class="classif-val">Lamiaceae</div>
+        </div>
+        <div class="classif-item">
+          <div class="classif-key">Genus</div>
+          <div class="classif-val">Ocimum</div>
+        </div>
+        <div class="classif-item">
+          <div class="classif-key">Species</div>
+          <div class="classif-val">O. tenuiflorum</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Common Names -->
+  <div class="section-block accent-teal">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Common Names</h2>
+    </div>
+    <div class="section-body">
+      <div class="name-tags">
+        <span class="name-tag">Tulsi</span>
+        <span class="name-tag">Holy Basil</span>
+        <span class="name-tag">Sacred Basil</span>
+        <span class="name-tag">Hindi / Marathi: Tulsi (तुलसी)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. About the Plant -->
+  <div class="section-block accent-amber">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>About the Plant</h2>
+    </div>
+    <div class="section-body">
+      <p>Tulsi is a highly valued medicinal and aromatic herb widely used in traditional medicine, especially in Ayurveda. It is a small perennial shrub that grows about 30–60 cm in height. The plant has green or purple leaves, a strong aromatic smell, and small purple or white flowers.</p>
+      <p>Tulsi is known for its antioxidant, anti-inflammatory, antimicrobial, and anticancer properties, making it one of the most important medicinal plants in traditional Indian pharmacology.</p>
+    </div>
+  </div>
+
+  <!-- 4. Historical Background -->
+  <div class="section-block accent-gold">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Historical Background</h2>
+    </div>
+    <div class="section-body">
+      <p>Tulsi has been used in Ayurvedic medicine for more than 3000 years. In Indian culture, it is considered a sacred plant and is often grown in courtyards and temples. Ancient Ayurvedic texts describe Tulsi as "The Queen of Herbs" due to its wide range of medicinal benefits.</p>
+      <p>It has traditionally been used for treating respiratory disorders, infections, stress, and inflammatory diseases, making it a cornerstone of both spiritual and therapeutic practice across the Indian subcontinent.</p>
+    </div>
+  </div>
+
+  <!-- 5. Origin and Distribution -->
+  <div class="section-block accent-sage">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Origin and Distribution</h2>
+    </div>
+    <div class="section-body">
+      <p>Tulsi is believed to have originated in India and Southeast Asia. Today it is widely cultivated in India, Nepal, Sri Lanka, Thailand, and other tropical and subtropical regions of the world. The plant grows well in warm climates with moderate rainfall and is commonly found in gardens and near homes across India.</p>
+    </div>
+  </div>
+
+  <!-- 6. Plant Parts Used -->
+  <div class="section-block accent-blue">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Plant Parts Used for Oral Cancer</h2>
+    </div>
+    <div class="section-body">
+      <p>The main parts of the Tulsi plant used in oral cancer research and treatment include:</p>
+      <ul class="detail-list">
+        <li><strong>Leaves</strong> — most commonly used; rich in eugenol, rosmarinic acid, and flavonoids</li>
+        <li><strong>Essential oil from leaves</strong> — high concentration of active anticancer compounds</li>
+        <li><strong>Stems</strong> — contain ursolic acid with documented anti-proliferative activity</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 7. Anticancer Mechanism -->
+  <div class="section-block accent-violet">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Anticancer Mechanism</h2>
+    </div>
+    <div class="section-body">
+      <div class="mechanism-grid">
+        <div class="mech-card">
+          <div class="mech-title">Antioxidant Activity</div>
+          <div class="mech-desc">Neutralises free radicals that can damage DNA and lead to cancerous mutations in oral cells.</div>
+        </div>
+        <div class="mech-card">
+          <div class="mech-title">Apoptosis Induction</div>
+          <div class="mech-desc">Triggers programmed cell death in cancer cells, preventing uncontrolled tumour growth.</div>
+        </div>
+        <div class="mech-card">
+          <div class="mech-title">Anti-inflammatory</div>
+          <div class="mech-desc">Reduces chronic inflammation associated with cancer development in oral mucosal tissues.</div>
+        </div>
+        <div class="mech-card">
+          <div class="mech-title">Tumour Inhibition</div>
+          <div class="mech-desc">Eugenol and ursolic acid suppress proliferation of oral cancer cell lines in vitro.</div>
+        </div>
+        <div class="mech-card">
+          <div class="mech-title">Immunomodulation</div>
+          <div class="mech-desc">Enhances the body's immune response against tumour cells and pathogenic agents.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. Traditional Uses -->
+  <div class="section-block accent-rose">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Traditional Uses</h2>
+    </div>
+    <div class="section-body">
+      <ul class="detail-list">
+        <li>Treatment of cough, cold, and respiratory infections</li>
+        <li>Relief from fever and inflammation</li>
+        <li>Improving general immunity and vitality</li>
+        <li>Treatment of skin diseases and wound healing</li>
+        <li>Used as a stress reliever and adaptogen</li>
+        <li>Used in herbal teas and Ayurvedic preparations for general health and wellness</li>
+      </ul>
+      <p style="margin-top:1rem;">Tulsi remains one of the most important medicinal plants in Ayurveda, valued for both spiritual significance and therapeutic benefits.</p>
+    </div>
+  </div>
+
+  <!-- 9. Phytochemical Compounds -->
+  <div class="section-block accent-teal">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Phytochemical Compounds</h2>
+    </div>
+    <div class="section-body" style="padding:0;">
+      <div class="table-wrap">
+        <table class="phyto-table">
+          <thead>
+            <tr>
+              <th>Scientific Name</th>
+              <th>Common Name</th>
+              <th>Plant Part</th>
+              <th>Phytochemical Class</th>
+              <th>Compound</th>
+              <th>Activity</th>
+              <th>PubChem ID</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Ocimum tenuiflorum</td>
+              <td><span class="name-tag" style="font-size:0.75rem;padding:0.2rem 0.7rem;">Holy basil / Tulsi</span></td>
+              <td><span class="part-badge">Leaves</span></td>
+              <td><span class="phyto-class-badge">Phenylpropanoid</span></td>
+              <td><span class="compound-name">Eugenol</span></td>
+              <td>
+                <div class="activity-list">
+                  <span class="activity-tag">Antioxidant</span>
+                  <span class="activity-tag">Anti-inflammatory</span>
+                  <span class="activity-tag">Anticancer</span>
+                </div>
+              </td>
+              <td><span class="pubchem-id">3314</span></td>
+            </tr>
+            <tr>
+              <td>Ocimum tenuiflorum</td>
+              <td><span class="name-tag" style="font-size:0.75rem;padding:0.2rem 0.7rem;">Holy basil / Tulsi</span></td>
+              <td><span class="part-badge">Leaves & Stem</span></td>
+              <td><span class="phyto-class-badge">Pentacyclic Triterpenoid</span></td>
+              <td><span class="compound-name">Ursolic Acid</span></td>
+              <td>
+                <div class="activity-list">
+                  <span class="activity-tag">Prevents cancer cell growth</span>
+                  <span class="activity-tag">Apoptosis induction</span>
+                </div>
+              </td>
+              <td><span class="pubchem-id">64945</span></td>
+            </tr>
+            <tr>
+              <td>Ocimum tenuiflorum</td>
+              <td><span class="name-tag" style="font-size:0.75rem;padding:0.2rem 0.7rem;">Holy basil / Tulsi</span></td>
+              <td><span class="part-badge">Leaves & Stem</span></td>
+              <td><span class="phyto-class-badge">Polyphenol</span></td>
+              <td><span class="compound-name">Rosmarinic Acid</span></td>
+              <td>
+                <div class="activity-list">
+                  <span class="activity-tag">Strong antioxidant</span>
+                  <span class="activity-tag">Anti-inflammatory</span>
+                </div>
+              </td>
+              <td><span class="pubchem-id">5281792</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Back button -->
+  <div class="back-wrap">
+    <a href="plants.html" class="back-link">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 19"/></svg>
+      Back to Plants
+    </a>
+  </div>
+
+</div>
+</body>
+</html>

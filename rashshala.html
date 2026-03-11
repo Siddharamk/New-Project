@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rashshala Visit — Bagewadi Kar Rasshala</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@300;400;500;600&family=Syne:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink:       #0e1a13;
+      --pine:      #1e3d2a;
+      --fern:      #2e6644;
+      --herb:      #3d8f5f;
+      --dew:       #74c496;
+      --mist:      #d0eddf;
+      --parchment: #f4ede0;
+      --vellum:    #f7f4ee;
+      --gold:      #d9a93a;
+      --warm:      #f0f7f2;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--vellum);
+      color: var(--ink);
+      line-height: 1.7;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: radial-gradient(circle, rgba(46,102,68,0.06) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--ink);
+      padding: 1.1rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(217,169,58,0.2);
+      box-shadow: 0 2px 24px rgba(0,0,0,0.3);
+    }
+    .nav-brand {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--parchment);
+    }
+    .nav-brand em { color: var(--gold); font-style: normal; }
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(220,240,225,0.55);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--dew); }
+
+    /* ── MAIN LAYOUT ── */
+    .page-wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 3rem 2rem 5rem;
+    }
+
+    /* ── SECTION BLOCK ── */
+    .section-block {
+      margin-bottom: 3rem;
+      background: #fff;
+      border-radius: 14px;
+      border: 1px solid rgba(14,26,19,0.08);
+      box-shadow: 0 2px 10px rgba(14,26,19,0.04);
+      overflow: hidden;
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.4rem 1.8rem;
+      border-bottom: 1px solid rgba(14,26,19,0.07);
+    }
+    .section-num {
+      font-family: 'Fraunces', serif;
+      font-size: 0.95rem;
+      font-style: italic;
+      font-weight: 600;
+      color: var(--herb);
+      min-width: 28px;
+    }
+    .section-header h2 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: -0.2px;
+    }
+    .section-body { padding: 1.6rem 1.8rem; }
+    .section-body p {
+      font-size: 0.9rem;
+      color: #4a5e52;
+      line-height: 1.85;
+      margin-bottom: 0.75rem;
+    }
+    .section-body p:last-child { margin-bottom: 0; }
+
+    /* ── ACCENT BARS ── */
+    .accent-green  .section-header { border-left: 4px solid var(--herb); }
+    .accent-teal   .section-header { border-left: 4px solid #2e8a7a; }
+    .accent-amber  .section-header { border-left: 4px solid #c8943a; }
+    .accent-violet .section-header { border-left: 4px solid #7a4a9a; }
+    .accent-blue   .section-header { border-left: 4px solid #3a6aaa; }
+    .accent-rose   .section-header { border-left: 4px solid #aa4a5a; }
+    .accent-sage   .section-header { border-left: 4px solid #6a8a5a; }
+    .accent-gold   .section-header { border-left: 4px solid var(--gold); }
+
+    /* ── VISIT PHOTO ── */
+    .visit-photo-wrap {
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .visit-photo-wrap img {
+      width: 100%;
+      max-height: 480px;
+      object-fit: cover;
+      display: block;
+      border-radius: 10px;
+    }
+    .photo-caption {
+      margin-top: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+    .caption-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--warm);
+      border: 1px solid rgba(46,102,68,0.12);
+      border-radius: 8px;
+      padding: 0.4rem 0.85rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.74rem;
+      color: #4a5e52;
+    }
+    .caption-chip svg {
+      width: 12px; height: 12px;
+      stroke: var(--herb);
+      stroke-width: 1.8;
+      fill: none;
+      flex-shrink: 0;
+    }
+    .caption-chip strong { color: var(--ink); font-weight: 600; }
+
+    /* ── INFO GRID ── */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 0.75rem;
+    }
+    .info-card {
+      background: var(--warm);
+      border: 1px solid rgba(46,102,68,0.1);
+      border-radius: 10px;
+      padding: 1.1rem 1.2rem;
+    }
+    .info-label {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--herb);
+      margin-bottom: 0.3rem;
+    }
+    .info-val {
+      font-family: 'Fraunces', serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.4;
+    }
+
+    /* ── LIST ── */
+    .detail-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .detail-list li {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      font-size: 0.88rem;
+      color: #4a5e52;
+      line-height: 1.7;
+    }
+    .detail-list li::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--herb);
+      border-radius: 50%;
+      margin-top: 0.55rem;
+      flex-shrink: 0;
+    }
+    .detail-list li strong { color: var(--ink); font-weight: 600; }
+
+    /* ── HIGHLIGHT QUOTE ── */
+    .highlight-quote {
+      background: var(--ink);
+      border-radius: 12px;
+      padding: 2rem 2.2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .highlight-quote::before {
+      content: '"';
+      position: absolute;
+      top: -0.5rem; left: 1.2rem;
+      font-family: 'Fraunces', serif;
+      font-size: 8rem;
+      color: rgba(116,196,150,0.08);
+      line-height: 1;
+      pointer-events: none;
+    }
+    .highlight-quote p {
+      font-family: 'Fraunces', serif;
+      font-size: 1.05rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--parchment);
+      line-height: 1.7;
+      position: relative;
+    }
+    .highlight-quote .quote-source {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--dew);
+      margin-top: 1rem;
+      display: block;
+      font-style: normal;
+    }
+
+    /* ── BACK ── */
+    .back-wrap { text-align: center; padding-top: 1rem; }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.8rem 2.2rem;
+      border: 1px solid rgba(46,102,68,0.22);
+      border-radius: 50px;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--pine);
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+    .back-link:hover {
+      background: var(--pine);
+      color: var(--parchment);
+      border-color: var(--pine);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(30,61,42,0.16);
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 1rem 1.2rem; }
+      .page-wrap { padding: 2rem 1rem 4rem; }
+      .section-body, .section-header { padding-left: 1.2rem; padding-right: 1.2rem; }
+      .highlight-quote { padding: 1.4rem 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-brand"><em>Anticancer Potential</em> of Medicinal Plants in Oral Cancer Therapy</span>
+  <a href="sections.html" class="nav-back">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    Back to Sections
+  </a>
+</nav>
+
+<!-- CONTENT -->
+<div class="page-wrap">
+
+  <!-- Visit Photo — FIRST -->
+  <div class="section-block accent-sage">
+    <div class="section-header">
+      <span class="section-num">—</span>
+      <h2>Field Visit Documentation</h2>
+    </div>
+    <div class="section-body">
+      <div class="visit-photo-wrap">
+        <img src="images/WhatsApp Image 2026-03-02 at 15.03.43.jpeg" alt="Field visit to Bagewadi Kar Rasshala, Solapur">
+      </div>
+      <div class="photo-caption">
+        <span class="caption-chip">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          127, Hotgi Rd, Industrial Estate, Sainath Nagar, <strong>Solapur, Maharashtra 413003</strong>
+        </span>
+        <span class="caption-chip">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Monday, 02/03/2026 · 01:52 PM GMT +05:30
+        </span>
+        <span class="caption-chip">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+          Lat <strong>17.643288°</strong> · Long <strong>75.92115°</strong>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- About the Institution -->
+  <div class="section-block accent-green">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>About the Institution</h2>
+    </div>
+    <div class="section-body">
+      <div class="highlight-quote">
+        <p>Bagewadi Kar Rasshala is a reputed Ayurvedic pharmaceutical unit dedicated to the preparation and promotion of traditional herbal medicines based on classical Ayurvedic principles.</p>
+        <span class="quote-source">Bagewadi Kar Rasshala · Solapur, Maharashtra</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Location & Visit Details -->
+  <div class="section-block accent-teal">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Visit Details</h2>
+    </div>
+    <div class="section-body">
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-label">Institution</div>
+          <div class="info-val">Bagewadi Kar Rasshala</div>
+        </div>
+        <div class="info-card">
+          <div class="info-label">Location</div>
+          <div class="info-val">Sainath Nagar, Solapur, Maharashtra 413003</div>
+        </div>
+        <div class="info-card">
+          <div class="info-label">Date of Visit</div>
+          <div class="info-val">Monday, 2nd March 2026</div>
+        </div>
+        <div class="info-card">
+          <div class="info-label">GPS Coordinates</div>
+          <div class="info-val">17.643288° N, 75.92115° E</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Focus & Manufacturing -->
+  <div class="section-block accent-amber">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Focus & Manufacturing</h2>
+    </div>
+    <div class="section-body">
+      <p>The institution focuses on manufacturing a variety of Ayurvedic formulations using carefully selected medicinal plants and natural ingredients. Their product range includes:</p>
+      <ul class="detail-list">
+        <li><strong>Tablets</strong> — standardised Ayurvedic formulations for systemic therapeutic use</li>
+        <li><strong>Powders (Churna)</strong> — classical herbal powder preparations for digestive and general health</li>
+        <li><strong>Herbal Oils</strong> — medicated oils for external application and therapeutic massage</li>
+        <li><strong>Decoctions (Kadha)</strong> — traditional liquid preparations from boiled herbs</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Quality & Standards -->
+  <div class="section-block accent-blue">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Quality & Standards</h2>
+    </div>
+    <div class="section-body">
+      <p>By combining traditional Ayurvedic knowledge with modern quality control and manufacturing practices, the organisation ensures the safety, purity, and effectiveness of its products. Key practices include:</p>
+      <ul class="detail-list">
+        <li><strong>Raw material selection</strong> — careful sourcing and authentication of medicinal plant material</li>
+        <li><strong>Standardised production</strong> — consistent manufacturing methods aligned with classical Ayurvedic texts</li>
+        <li><strong>Scientific quality testing</strong> — modern laboratory validation of purity, potency, and safety</li>
+        <li><strong>Good Manufacturing Practices (GMP)</strong> — adherence to regulatory standards for herbal medicines</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Significance -->
+  <div class="section-block accent-violet">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Significance for Our Research</h2>
+    </div>
+    <div class="section-body">
+      <p>This field visit provided valuable firsthand exposure to the practical application of Ayurvedic principles in a professional pharmaceutical setting. Observing how traditional herbal knowledge is translated into standardised medicinal products offered important context for understanding the real-world relevance of the plants studied in this research.</p>
+      <p>The facility's emphasis on preserving classical Ayurvedic formulations while integrating modern quality control directly supports the goals of this project — demonstrating that plant-based medicines, including those with anticancer potential, can be developed responsibly and effectively for holistic healthcare.</p>
+    </div>
+  </div>
+
+  <!-- Back button -->
+  <div class="back-wrap">
+    <a href="sections.html" class="back-link">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      Back to Sections
+    </a>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neem — Azadirachta indica</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@300;400;500;600&family=Syne:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink:       #0e1a13;
+      --pine:      #1e3d2a;
+      --fern:      #2e6644;
+      --herb:      #3d8f5f;
+      --dew:       #74c496;
+      --mist:      #d0eddf;
+      --parchment: #f4ede0;
+      --vellum:    #f7f4ee;
+      --gold:      #d9a93a;
+      --warm:      #f0f7f2;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--vellum);
+      color: var(--ink);
+      line-height: 1.7;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: radial-gradient(circle, rgba(46,102,68,0.06) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--ink);
+      padding: 1.1rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(217,169,58,0.2);
+      box-shadow: 0 2px 24px rgba(0,0,0,0.3);
+    }
+    .nav-brand {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--parchment);
+    }
+    .nav-brand em { color: var(--gold); font-style: normal; }
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(220,240,225,0.55);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--dew); }
+
+    /* ── MAIN LAYOUT ── */
+    .page-wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 3rem 2rem 5rem;
+    }
+
+    /* ── SECTION BLOCK ── */
+    .section-block {
+      margin-bottom: 3rem;
+      background: #fff;
+      border-radius: 14px;
+      border: 1px solid rgba(14,26,19,0.08);
+      box-shadow: 0 2px 10px rgba(14,26,19,0.04);
+      overflow: hidden;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.4rem 1.8rem;
+      border-bottom: 1px solid rgba(14,26,19,0.07);
+    }
+    .section-num {
+      font-family: 'Fraunces', serif;
+      font-size: 0.95rem;
+      font-style: italic;
+      font-weight: 600;
+      color: var(--herb);
+      min-width: 28px;
+    }
+    .section-header h2 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: -0.2px;
+    }
+    .section-body {
+      padding: 1.6rem 1.8rem;
+    }
+    .section-body p {
+      font-size: 0.9rem;
+      color: #4a5e52;
+      line-height: 1.85;
+      margin-bottom: 0.75rem;
+    }
+    .section-body p:last-child { margin-bottom: 0; }
+
+    /* ── CLASSIFICATION GRID ── */
+    .classif-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.75rem;
+    }
+    .classif-item {
+      background: var(--warm);
+      border: 1px solid rgba(46,102,68,0.1);
+      border-radius: 10px;
+      padding: 0.9rem 1.1rem;
+    }
+    .classif-key {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--herb);
+      margin-bottom: 0.25rem;
+    }
+    .classif-val {
+      font-family: 'Fraunces', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    /* ── COMMON NAMES ── */
+    .name-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+    .name-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.4rem 1rem;
+      background: var(--mist);
+      border: 1px solid rgba(46,102,68,0.15);
+      border-radius: 50px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--pine);
+    }
+
+    /* ── LIST ── */
+    .detail-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .detail-list li {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      font-size: 0.88rem;
+      color: #4a5e52;
+      line-height: 1.7;
+    }
+    .detail-list li::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--herb);
+      border-radius: 50%;
+      margin-top: 0.55rem;
+      flex-shrink: 0;
+    }
+    .detail-list li strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    /* ── MECHANISM CARDS ── */
+    .mechanism-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.75rem;
+    }
+    .mech-card {
+      background: var(--warm);
+      border: 1px solid rgba(46,102,68,0.1);
+      border-radius: 10px;
+      padding: 1.1rem 1.2rem;
+    }
+    .mech-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--fern);
+      margin-bottom: 0.4rem;
+    }
+    .mech-desc {
+      font-size: 0.82rem;
+      color: #5a6e62;
+      line-height: 1.65;
+    }
+
+    /* ── ACCENT BARS per section ── */
+    .accent-green  .section-header { border-left: 4px solid var(--herb); }
+    .accent-teal   .section-header { border-left: 4px solid #2e8a7a; }
+    .accent-amber  .section-header { border-left: 4px solid #c8943a; }
+    .accent-violet .section-header { border-left: 4px solid #7a4a9a; }
+    .accent-blue   .section-header { border-left: 4px solid #3a6aaa; }
+    .accent-rose   .section-header { border-left: 4px solid #aa4a5a; }
+    .accent-sage   .section-header { border-left: 4px solid #6a8a5a; }
+    .accent-gold   .section-header { border-left: 4px solid var(--gold); }
+
+    /* ── BACK BUTTON ── */
+    .back-wrap {
+      text-align: center;
+      padding-top: 1rem;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.8rem 2.2rem;
+      border: 1px solid rgba(46,102,68,0.22);
+      border-radius: 50px;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--pine);
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+    .back-link:hover {
+      background: var(--pine);
+      color: var(--parchment);
+      border-color: var(--pine);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(30,61,42,0.16);
+    }
+
+    /* ── PHYTOCHEMICAL TABLE ── */
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .phyto-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+      min-width: 620px;
+    }
+    .phyto-table thead tr {
+      background: var(--ink);
+    }
+    .phyto-table thead th {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--dew);
+      padding: 0.9rem 1rem;
+      text-align: left;
+      white-space: nowrap;
+    }
+    .phyto-table tbody tr {
+      border-bottom: 1px solid rgba(14,26,19,0.07);
+      transition: background 0.2s;
+    }
+    .phyto-table tbody tr:last-child { border-bottom: none; }
+    .phyto-table tbody tr:hover { background: var(--warm); }
+    .phyto-table td {
+      padding: 0.9rem 1rem;
+      color: #4a5e52;
+      vertical-align: top;
+      line-height: 1.6;
+    }
+    .phyto-table td:first-child {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-size: 0.85rem;
+      color: var(--ink);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .compound-name {
+      font-family: 'Fraunces', serif;
+      font-weight: 600;
+      font-size: 0.88rem;
+      color: var(--ink);
+      display: block;
+      margin-bottom: 0.15rem;
+    }
+    .phyto-class-badge {
+      display: inline-block;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.56rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 0.18rem 0.55rem;
+      border-radius: 20px;
+      background: var(--mist);
+      color: var(--fern);
+      border: 1px solid rgba(46,102,68,0.15);
+      white-space: nowrap;
+    }
+    .pubchem-id {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-family: 'Inter', monospace;
+      font-size: 0.75rem;
+      color: #3a6aaa;
+      font-weight: 500;
+    }
+    .part-badge {
+      display: inline-block;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 0.2rem 0.65rem;
+      background: rgba(116,196,150,0.15);
+      border: 1px solid rgba(116,196,150,0.3);
+      border-radius: 20px;
+      color: var(--pine);
+      white-space: nowrap;
+    }
+    .activity-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+    .activity-tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 500;
+      padding: 0.18rem 0.55rem;
+      border-radius: 20px;
+      border: 1px solid rgba(14,26,19,0.1);
+      color: #4a5e52;
+      background: #fff;
+      white-space: nowrap;
+    }
+
+
+    /* ── FIELD PHOTO ── */
+    .field-photo-wrap {
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .field-photo-wrap img {
+      width: 90%;
+      max-height: 550px;
+      object-fit: cover;
+      display: block;
+      border-radius: 10px;
+    }
+    .field-photo-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 1rem;
+    }
+    .field-meta-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: var(--warm);
+      border: 1px solid rgba(46,102,68,0.12);
+      border-radius: 8px;
+      padding: 0.45rem 0.85rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      color: #4a5e52;
+    }
+    .field-meta-item svg {
+      width: 13px; height: 13px;
+      stroke: var(--herb);
+      stroke-width: 1.8;
+      fill: none;
+      flex-shrink: 0;
+    }
+    .field-meta-item strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 1rem 1.2rem; }
+      .page-wrap { padding: 2rem 1rem 4rem; }
+      .section-body, .section-header { padding-left: 1.2rem; padding-right: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-brand"><em>Anticancer Potential</em> of Medicinal Plants in Oral Cancer Therapy</span>
+  <a href="plants.html" class="nav-back">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    Back to Plants
+  </a>
+</nav>
+
+
+<!-- CONTENT -->
+<div class="page-wrap">
+
+  <!-- 11. Field Documentation -->
+  <div class="section-block accent-sage">
+    <div class="section-header">
+      <span class="section-num"></span>
+      <h2</h2>
+    </div>
+    <div class="section-body">
+      <div class="field-photo-wrap">
+        <img src="images/Picture1.png" alt="Neem tree observed at Solapur field visit, Maharashtra">
+      </div>
+    </div>
+  </div>
+
+  <!-- 1. Scientific Classification -->
+  <div class="section-block accent-green">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Scientific Classification</h2>
+    </div>
+    <div class="section-body">
+      <div class="classif-grid">
+        <div class="classif-item">
+          <div class="classif-key">Kingdom</div>
+          <div class="classif-val">Plantae</div>
+        </div>
+        <div class="classif-item">
+          <div class="classif-key">Division</div>
+          <div class="classif-val">Magnoliophyta</div>
+        </div>
+        <div class="classif-item">
+          <div class="classif-key">Class</div>
+          <div class="classif-val">Magnoliopsida</div>
+        </div>
+        <div class="classif-item">
+          <div class="classif-key">Order</div>
+          <div class="classif-val">Sapindales</div>
+        </div>
+        <div class="classif-item">
+          <div class="classif-key">Family</div>
+          <div class="classif-val">Meliaceae</div>
+        </div>
+        <div class="classif-item">
+          <div class="classif-key">Genus</div>
+          <div class="classif-val">Azadirachta</div>
+        </div>
+        <div class="classif-item">
+          <div class="classif-key">Species</div>
+          <div class="classif-val">A. indica</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Common Names -->
+  <div class="section-block accent-teal">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Common Names</h2>
+    </div>
+    <div class="section-body">
+      <div class="name-tags">
+        <span class="name-tag">Neem</span>
+        <span class="name-tag">Indian Lilac</span>
+        <span class="name-tag">Margosa Tree</span>
+        <span class="name-tag">Nimtree</span>
+        <span class="name-tag">Hindi / Marathi: Neem (नीम)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. About the Plant -->
+  <div class="section-block accent-amber">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>About the Plant</h2>
+    </div>
+    <div class="section-body">
+      <p>Neem is a fast-growing evergreen tree native to the Indian subcontinent, capable of reaching heights of 15–20 metres. It is one of the most researched plants in the world due to its extraordinary range of biological activities. The tree is recognised by its spreading branches, dark green compound leaves, and small white fragrant flowers. Every part of the neem tree — leaves, bark, seeds, roots, and flowers — possesses medicinal value.</p>
+      <p>Neem is a cornerstone of Ayurvedic medicine, prized for its antifungal, antibacterial, antiviral, anti-inflammatory, and anticancer properties. It plays an essential role in traditional oral health practices across South Asia.</p>
+    </div>
+  </div>
+
+  <!-- 4. Historical Background -->
+  <div class="section-block accent-gold">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Historical Background</h2>
+    </div>
+    <div class="section-body">
+      <p>Neem has been used in Ayurvedic medicine for over 4000 years. Ancient Sanskrit texts refer to neem as "Sarva Roga Nivarini" — the curer of all ailments. The Charaka Samhita and Sushruta Samhita, two of the oldest Ayurvedic texts, extensively document its use in treating skin diseases, fevers, infections, and dental disorders.</p>
+      <p>Neem twigs have traditionally been used as natural toothbrushes across India and Africa, a practice now validated by modern dentistry research confirming their antibacterial and anti-inflammatory properties.</p>
+    </div>
+  </div>
+
+  <!-- 5. Origin and Distribution -->
+  <div class="section-block accent-sage">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Origin and Distribution</h2>
+    </div>
+    <div class="section-body">
+      <p>Neem originated in the Indian subcontinent and Myanmar. Today it is widely distributed across tropical and subtropical regions including India, Pakistan, Bangladesh, Sri Lanka, Southeast Asia, Africa, and parts of the Americas. It grows well in semi-arid conditions, tolerates poor soil quality, and is commonly found along roadsides, in villages, and in agricultural settings across India.</p>
+    </div>
+  </div>
+
+  <!-- 6. Plant Parts Used -->
+  <div class="section-block accent-blue">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Plant Parts Used for Oral Cancer</h2>
+    </div>
+    <div class="section-body">
+      <p>Several parts of the neem plant are used in oral cancer research and treatment:</p>
+      <ul class="detail-list">
+        <li><strong>Leaves</strong> — most commonly used; rich in nimbolide, quercetin, and flavonoids</li>
+        <li><strong>Bark</strong> — used in decoctions for oral hygiene and anti-inflammatory effects</li>
+        <li><strong>Seeds / Seed oil</strong> — contain azadirachtin and nimbin with cytotoxic activity</li>
+        <li><strong>Flowers</strong> — used in traditional preparations for mouth ulcers and lesions</li>
+        <li><strong>Roots</strong> — studied for antimicrobial and immunomodulatory compounds</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 7. Anticancer Mechanism -->
+  <div class="section-block accent-violet">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Anticancer Mechanism</h2>
+    </div>
+    <div class="section-body">
+      <div class="mechanism-grid">
+        <div class="mech-card">
+          <div class="mech-title">Antioxidant Activity</div>
+          <div class="mech-desc">Neutralises free radicals that damage DNA and trigger cancerous mutations in oral cells.</div>
+        </div>
+        <div class="mech-card">
+          <div class="mech-title">Apoptosis Induction</div>
+          <div class="mech-desc">Nimbolide and nimbin trigger programmed cell death specifically in oral cancer cell lines.</div>
+        </div>
+        <div class="mech-card">
+          <div class="mech-title">Anti-inflammatory</div>
+          <div class="mech-desc">Reduces chronic oral inflammation, a key driver of cancer progression in mucosal tissues.</div>
+        </div>
+        <div class="mech-card">
+          <div class="mech-title">Anti-angiogenesis</div>
+          <div class="mech-desc">Inhibits formation of new blood vessels that supply nutrients to tumour tissue.</div>
+        </div>
+        <div class="mech-card">
+          <div class="mech-title">Cell Cycle Arrest</div>
+          <div class="mech-desc">Neem compounds halt cancer cell proliferation at key phases of the cell cycle.</div>
+        </div>
+        <div class="mech-card">
+          <div class="mech-title">Immunomodulation</div>
+          <div class="mech-desc">Enhances the immune system's recognition and elimination of tumour cells.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. Traditional Uses -->
+  <div class="section-block accent-rose">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Traditional Uses</h2>
+    </div>
+    <div class="section-body">
+      <ul class="detail-list">
+        <li>Neem leaf extract mouthwash for reducing oral inflammation and treating ulcers</li>
+        <li>Neem oil applied topically to oral lesions and wounds</li>
+        <li>Neem bark decoction used daily for improved oral hygiene and gum health</li>
+        <li>Neem twig (datun) used as a natural toothbrush across rural India</li>
+        <li>Neem capsules and churna taken internally for systemic anticancer and detox effects</li>
+        <li>Used in Ayurvedic formulations for treating skin disorders, fever, and infections</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 9. Research Findings -->
+  <div class="section-block accent-green">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Research Findings</h2>
+    </div>
+    <div class="section-body">
+      <p>Modern scientific research has validated the anticancer properties of neem compounds. Key findings include:</p>
+      <ul class="detail-list">
+        <li>Nimbolide inhibits proliferation and induces apoptosis in oral squamous carcinoma cell lines</li>
+        <li>Neem leaf extract significantly reduces tumour volume in in vivo oral cancer models</li>
+        <li>Azadirachtin demonstrates selective cytotoxicity against cancer cells while sparing normal cells</li>
+        <li>Neem compounds enhance the effectiveness of conventional chemotherapy drugs</li>
+        <li>Anti-angiogenic activity of neem has been confirmed in multiple laboratory studies</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 10. Phytochemical Compounds -->
+  <div class="section-block accent-teal">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Phytochemical Compounds</h2>
+    </div>
+    <div class="section-body" style="padding:0;">
+      <div class="table-wrap">
+        <table class="phyto-table">
+          <thead>
+            <tr>
+              <th>Scientific Name</th>
+              <th>Plant Part</th>
+              <th>Phytochemical Class</th>
+              <th>Compound</th>
+              <th>Activity</th>
+              <th>PubChem ID</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Azadirachta indica</td>
+              <td><span class="part-badge">Leaves</span></td>
+              <td><span class="phyto-class-badge">Limonoid (Triterpenoid)</span></td>
+              <td><span class="compound-name">Nimbolide</span></td>
+              <td>
+                <div class="activity-list">
+                  <span class="activity-tag">Apoptosis induction</span>
+                  <span class="activity-tag">Anti-inflammatory</span>
+                  <span class="activity-tag">Antimicrobial</span>
+                  <span class="activity-tag">Antioxidant</span>
+                  <span class="activity-tag">Anticancer</span>
+                </div>
+              </td>
+              <td><span class="pubchem-id">12313376</span></td>
+            </tr>
+            <tr>
+              <td>Azadirachta indica</td>
+              <td><span class="part-badge">Seeds</span></td>
+              <td><span class="phyto-class-badge">Limonoid (Tetranortriterpenoid)</span></td>
+              <td><span class="compound-name">Azadirachtin</span></td>
+              <td>
+                <div class="activity-list">
+                  <span class="activity-tag">Anti-proliferative</span>
+                  <span class="activity-tag">Anti-inflammatory</span>
+                  <span class="activity-tag">Antimicrobial</span>
+                  <span class="activity-tag">Antioxidant</span>
+                  <span class="activity-tag">Anticancer</span>
+                </div>
+              </td>
+              <td><span class="pubchem-id">5281303</span></td>
+            </tr>
+            <tr>
+              <td>Azadirachta indica</td>
+              <td><span class="part-badge">Bark</span></td>
+              <td><span class="phyto-class-badge">Flavonoid</span></td>
+              <td><span class="compound-name">Catechin</span></td>
+              <td>
+                <div class="activity-list">
+                  <span class="activity-tag">Anti-proliferative</span>
+                  <span class="activity-tag">Anti-inflammatory</span>
+                  <span class="activity-tag">Antimicrobial</span>
+                  <span class="activity-tag">Antioxidant</span>
+                  <span class="activity-tag">Anticancer</span>
+                </div>
+              </td>
+              <td><span class="pubchem-id">9064</span></td>
+            </tr>
+            <tr>
+              <td>Azadirachta indica</td>
+              <td><span class="part-badge">Flowers & Fruits</span></td>
+              <td><span class="phyto-class-badge">Limonoid (Triterpenoid)</span></td>
+              <td><span class="compound-name">Azadiradione</span></td>
+              <td>
+                <div class="activity-list">
+                  <span class="activity-tag">Anti-proliferative</span>
+                  <span class="activity-tag">Anti-inflammatory</span>
+                  <span class="activity-tag">Antimicrobial</span>
+                  <span class="activity-tag">Antioxidant</span>
+                  <span class="activity-tag">Anticancer</span>
+                </div>
+              </td>
+              <td><span class="pubchem-id">12308714</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Back button -->
+  <div class="back-wrap">
+    <a href="plants.html" class="back-link">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      Back to Plants
+    </a>
+  </div>
+
+</div>
+
+</body>
+</html>
